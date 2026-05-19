@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Observatório do Comércio de Pernambuco</title>
+  <script src="dados.js"></script>
+  <script src="emprego_rais.js"></script>
+  <style>
+    :root {
+      --ink: #172233;
+      --muted: #607086;
+      --line: #d9e2ed;
+      --paper: #f6f8fb;
+      --panel: #ffffff;
+      --brand: #00549f;
+      --brand-deep: #003d7a;
+      --brand-2: #d5a32a;
+      --good: #08786d;
+      --bad: #ad3d34;
+      --soft: #eaf3fb;
+      --gold-soft: #fff6df;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    header {
+      background: var(--brand);
+      color: white;
+      padding: 0 0 34px;
+      border-bottom: 5px solid var(--brand-2);
+    }
+
+    .brand-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 40px;
+      background: var(--brand-deep);
+      border-bottom: 0;
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      background: white;
+      border-radius: 8px;
+      padding: 6px 9px;
+      box-shadow: 0 10px 26px rgba(0, 33, 76, 0.18);
+    }
+
+    .brand-logo img {
+      display: block;
+      width: min(160px, 28vw);
+      height: auto;
+    }
+
+    .brand-kicker {
+      color: #ffe6a7;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    .hero-copy {
+      padding: 28px 40px 0;
+    }
+
+    .eyebrow {
+      color: #ffe6a7;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 8px 0 10px;
+      font-size: clamp(30px, 5vw, 56px);
+      line-height: 1.02;
+      max-width: 980px;
+      letter-spacing: 0;
+    }
+
+    header p {
+      margin: 0;
+      max-width: 900px;
+      color: #dcecff;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 24px auto 56px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .source-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .source-links a {
+      color: var(--brand);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 13px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 52, 47, 0.04);
+    }
+
+    .card {
+      padding: 18px;
+      min-height: 154px;
+    }
+
+    .card h2, .panel h2 {
+      margin: 0;
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .metric {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .metric strong {
+      font-size: 42px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .metric span { color: var(--muted); }
+
+    .delta {
+      display: inline-flex;
+      margin-top: 14px;
+      padding: 7px 9px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 14px;
+      background: var(--soft);
+      color: var(--good);
+    }
+
+    .delta.negative {
+      background: #f8eae8;
+      color: var(--bad);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .section-title {
+      margin: 30px 0 14px;
+    }
+
+    .section-title h2 {
+      margin: 0 0 4px;
+      font-size: 24px;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .chart {
+      width: 100%;
+      height: 360px;
+      margin-top: 12px;
+    }
+
+    .bar-chart {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(148px, 1.1fr) 1.8fr 54px;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .bar-track {
+      height: 12px;
+      border-radius: 999px;
+      background: #edf1ee;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--brand);
+    }
+
+    .bar-fill.negative {
+      background: var(--bad);
+    }
+
+    .table-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: minmax(190px, 1fr) 92px 92px;
+      gap: 12px;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .table-row strong {
+      font-size: 14px;
+    }
+
+    .table-row .num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .mini-chart {
+      height: 240px;
+      margin-top: 12px;
+    }
+
+    .insights {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .insights li {
+      border-left: 4px solid var(--brand-2);
+      padding: 10px 12px;
+      background: var(--gold-soft);
+      border-radius: 0 6px 6px 0;
+      color: #3e4644;
+      line-height: 1.42;
+      font-size: 14px;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 18px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      header { padding: 0 0 26px; }
+      .brand-bar { align-items: flex-start; flex-direction: column; padding: 14px 20px; }
+      .hero-copy { padding: 24px 20px 0; }
+      .brand-kicker { text-align: left; }
+      .cards, .grid { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; gap: 5px; }
+      .table-row { grid-template-columns: 1fr; gap: 4px; }
+      .table-row .num { text-align: left; }
+      .chart { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand-bar">
+      <a class="brand-logo" href="#" aria-label="Fecomércio Pernambuco">
+        <img src="assets/fecomercio-pe-logo.png" alt="Fecomércio Pernambuco">
+      </a>
+      <div class="brand-kicker">CNC · Sesc · Senac · Sindicatos Empresariais</div>
+    </div>
+    <div class="hero-copy">
+      <div class="eyebrow">Hub de Dados para PD&I</div>
+      <h1>Observatório do Comércio de Pernambuco</h1>
+      <p>Painel executivo automatizado para acompanhar varejo, serviços, atividades setoriais e sinais de demanda territorial para Fecomércio-PE, Senac/PE e Sesc/PE.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <div class="status" id="status"></div>
+      <div class="source-links" id="sources"></div>
+    </section>
+
+    <section class="cards" id="cards"></section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>Série recente dos índices IBGE</h2>
+        <div class="chart" id="lineChart"></div>
+      </article>
+
+      <article class="panel">
+        <h2>Leitura automática</h2>
+        <ul class="insights" id="insights"></ul>
+      </article>
+
+      <article class="panel">
+        <h2>Atividades do varejo: variação acumulada em 12 meses</h2>
+        <div class="bar-chart" id="bars"></div>
+      </article>
+
+      <article class="panel">
+        <h2>Como este painel vira produto</h2>
+        <ul class="insights">
+          <li>Atualização mensal com coleta automática em fontes oficiais e trilha de auditoria.</li>
+          <li>Camadas futuras: CAGED/RAIS, Comex Stat, cursos Senac, programas Sesc, mapas municipais e alertas.</li>
+          <li>Saídas: dashboard web, relatório executivo, nota técnica e apresentação para tomada de decisão.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="section-title">
+      <h2>Emprego formal RAIS</h2>
+      <p>Vínculos ativos em 31/12 para Pernambuco, com ocupações CBO oficiais e remuneração média nominal.</p>
+    </section>
+
+    <section class="cards" id="raisCards"></section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>Evolução dos vínculos formais</h2>
+        <div class="mini-chart" id="raisLineChart"></div>
+      </article>
+
+      <article class="panel">
+        <h2>Leitura RAIS</h2>
+        <ul class="insights" id="raisInsights"></ul>
+      </article>
+
+      <article class="panel">
+        <h2>Maiores ocupações em 2024</h2>
+        <div class="table-list" id="raisTopOccupations"></div>
+      </article>
+
+      <article class="panel">
+        <h2>Ocupações que mais cresceram desde 2020</h2>
+        <div class="table-list" id="raisGrowth"></div>
+      </article>
+    </section>
+
+    <footer>
+      Protótipo gerado com dados públicos. Para produção, recomenda-se rotina agendada, versionamento das bases, validação metodológica e governança LGPD.
+    </footer>
+  </main>
+
+  <script>
+    const data = window.OBSERVATORIO_DATA;
+    const rais = window.RAIS_EMPREGOS;
+
+    function formatNumber(value) {
+      return Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 1 });
+    }
+
+    function formatPct(value) {
+      const sign = value > 0 ? "+" : "";
+      return `${sign}${Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 1 })}%`;
+    }
+
+    function renderStatus() {
+      const date = new Date(data.atualizadoEm);
+      document.getElementById("status").textContent =
+        `Território: ${data.territorio} · atualização dos dados: ${date.toLocaleString("pt-BR")}`;
+      document.getElementById("sources").innerHTML = "";
+    }
+
+    function renderCards() {
+      document.getElementById("cards").innerHTML = data.cards.map((card) => `
+        <article class="card">
+          <h2>${card.titulo}</h2>
+          <div class="metric"><strong>${formatNumber(card.valor)}</strong><span>${card.unidade}</span></div>
+          <div class="delta ${card.variacao < 0 ? "negative" : ""}">${formatPct(card.variacao)} em 12 meses</div>
+          <p class="status">${card.periodo}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderRaisCards() {
+      document.getElementById("raisCards").innerHTML = rais.cards.map((card) => `
+        <article class="card">
+          <h2>${card.titulo}</h2>
+          <div class="metric"><strong>${card.unidade.startsWith("R$") ? formatCurrency(card.valor) : formatInteger(card.valor)}</strong><span>${card.unidade}</span></div>
+          <div class="delta ${card.variacao < 0 ? "negative" : ""}">${formatPct(card.variacao)} · ${card.comparacao}</div>
+          <p class="status">${card.periodo}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderInsights() {
+      document.getElementById("insights").innerHTML = data.insights
+        .map((insight) => `<li>${insight}</li>`)
+        .join("");
+    }
+
+    function renderRaisInsights() {
+      document.getElementById("raisInsights").innerHTML = rais.insights
+        .map((insight) => `<li>${insight}</li>`)
+        .join("");
+    }
+
+    function renderRaisTables() {
+      document.getElementById("raisTopOccupations").innerHTML = rais.ocupacoes.slice(0, 8).map((row) => `
+        <div class="table-row">
+          <strong>${row.ocupacao}</strong>
+          <span class="num">${formatInteger(row.vinculos)}</span>
+          <span class="num">${formatCurrency(row.remuneracaoMedia)}</span>
+        </div>
+      `).join("");
+
+      document.getElementById("raisGrowth").innerHTML = rais.crescimento.slice(0, 8).map((row) => `
+        <div class="table-row">
+          <strong>${row.ocupacao}</strong>
+          <span class="num">+${formatInteger(row.saldo)}</span>
+          <span class="num">${formatInteger(row.vinculosAtual)}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderBars() {
+      const rows = data.setores.slice(0, 9);
+      const max = Math.max(...rows.map((row) => Math.abs(row.variacao12m)), 1);
+      document.getElementById("bars").innerHTML = rows.map((row) => {
+        const width = Math.max(4, Math.abs(row.variacao12m) / max * 100);
+        return `
+          <div class="bar-row">
+            <div>${row.atividade}</div>
+            <div class="bar-track"><div class="bar-fill ${row.variacao12m < 0 ? "negative" : ""}" style="width:${width}%"></div></div>
+            <strong>${formatPct(row.variacao12m)}</strong>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderLineChart() {
+      const series = [
+        { key: "pmcVolume", color: "#00549f", name: "Volume varejo" },
+        { key: "pmcReceita", color: "#d5a32a", name: "Receita varejo" },
+        { key: "pmsReceita", color: "#003d7a", name: "Serviços" },
+      ];
+      const width = 900;
+      const height = 330;
+      const pad = { left: 46, right: 24, top: 26, bottom: 50 };
+      const all = series.flatMap((item) => data.series[item.key].slice(-18));
+      const min = Math.floor(Math.min(...all.map((d) => d.valor)) / 5) * 5;
+      const max = Math.ceil(Math.max(...all.map((d) => d.valor)) / 5) * 5;
+      const labels = data.series.pmcVolume.slice(-18).map((d) => d.curto);
+      const x = (i) => pad.left + (i / (labels.length - 1)) * (width - pad.left - pad.right);
+      const y = (value) => pad.top + ((max - value) / (max - min)) * (height - pad.top - pad.bottom);
+
+      const grid = [min, min + (max - min) / 2, max].map((tick) => `
+        <line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe3df" />
+        <text x="8" y="${y(tick) + 4}" font-size="12" fill="#66716e">${formatNumber(tick)}</text>
+      `).join("");
+
+      const paths = series.map((item) => {
+        const points = data.series[item.key].slice(-18).map((d, i) => `${x(i)},${y(d.valor)}`).join(" ");
+        return `<polyline points="${points}" fill="none" stroke="${item.color}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />`;
+      }).join("");
+
+      const xLabels = labels.map((label, i) => i % 3 === 0 || i === labels.length - 1
+        ? `<text x="${x(i)}" y="${height - 18}" font-size="12" fill="#66716e" text-anchor="middle">${label}</text>`
+        : ""
+      ).join("");
+
+      const legend = series.map((item, index) => `
+        <g transform="translate(${pad.left + index * 180}, 8)">
+          <rect width="12" height="12" rx="2" fill="${item.color}"></rect>
+          <text x="18" y="11" font-size="13" fill="#15201f">${item.name}</text>
+        </g>
+      `).join("");
+
+      document.getElementById("lineChart").innerHTML = `
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Séries recentes dos índices IBGE">
+          ${legend}
+          ${grid}
+          ${paths}
+          ${xLabels}
+        </svg>
+      `;
+    }
+
+    function renderRaisLineChart() {
+      const width = 860;
+      const height = 230;
+      const pad = { left: 58, right: 28, top: 18, bottom: 38 };
+      const rows = rais.serie;
+      const values = rows.map((row) => row.vinculos);
+      const min = Math.floor(Math.min(...values) / 100000) * 100000;
+      const max = Math.ceil(Math.max(...values) / 100000) * 100000;
+      const x = (i) => pad.left + (i / (rows.length - 1)) * (width - pad.left - pad.right);
+      const y = (value) => pad.top + ((max - value) / (max - min)) * (height - pad.top - pad.bottom);
+      const points = rows.map((row, i) => `${x(i)},${y(row.vinculos)}`).join(" ");
+      const grid = [min, min + (max - min) / 2, max].map((tick) => `
+        <line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe3df" />
+        <text x="8" y="${y(tick) + 4}" font-size="12" fill="#66716e">${formatCompact(tick)}</text>
+      `).join("");
+      const labels = rows.map((row, i) => `
+        <text x="${x(i)}" y="${height - 14}" font-size="12" fill="#66716e" text-anchor="middle">${row.ano}</text>
+      `).join("");
+      const dots = rows.map((row, i) => `
+        <circle cx="${x(i)}" cy="${y(row.vinculos)}" r="5" fill="#00549f" />
+      `).join("");
+      document.getElementById("raisLineChart").innerHTML = `
+        <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Evolução dos vínculos formais RAIS em Pernambuco">
+          ${grid}
+          <polyline points="${points}" fill="none" stroke="#00549f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+          ${dots}
+          ${labels}
+        </svg>
+      `;
+    }
+
+    function formatInteger(value) {
+      return Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 0 });
+    }
+
+    function formatCurrency(value) {
+      return Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 0 });
+    }
+
+    function formatCompact(value) {
+      return `${Math.round(value / 1000).toLocaleString("pt-BR")} mil`;
+    }
+
+    renderStatus();
+    renderCards();
+    renderRaisCards();
+    renderInsights();
+    renderRaisInsights();
+    renderBars();
+    renderLineChart();
+    renderRaisTables();
+    renderRaisLineChart();
+  </script>
+</body>
+</html>
