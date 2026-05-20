@@ -33,7 +33,9 @@
     }
 
     header {
-      background: var(--brand);
+      background:
+        linear-gradient(115deg, rgba(0, 61, 122, 0.98), rgba(0, 84, 159, 0.94)),
+        var(--brand-deep);
       color: white;
       padding: 0 0 34px;
       border-bottom: 5px solid var(--brand-2);
@@ -42,10 +44,10 @@
     .brand-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       gap: 24px;
       padding: 16px 40px;
-      background: #ffffff;
+      background: var(--brand-deep);
       border-bottom: 0;
     }
 
@@ -61,25 +63,36 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: transparent;
-      border-radius: 0;
-      width: 142px;
-      height: 72px;
-      padding: 0;
-      box-shadow: none;
+      background: #ffffff;
+      border-radius: 8px;
+      width: 156px;
+      height: 79px;
+      padding: 8px 10px;
+      box-shadow: 0 10px 26px rgba(0, 33, 76, 0.18);
     }
 
     .brand-logo img,
     .partner-logo img {
       display: block;
-      max-height: 52px;
-      max-width: 120px;
+      max-height: 57px;
+      max-width: 132px;
       object-fit: contain;
     }
 
+    .brand-logo img {
+      max-height: 74px;
+      max-width: 154px;
+    }
+
+    .partner-logo.ppad img {
+      max-height: 64px;
+      max-width: 144px;
+      transform: translateY(-4px);
+    }
+
     .partner-logo.ufrpe img {
-      max-width: 52px;
-      max-height: 52px;
+      max-width: 68px;
+      max-height: 68px;
     }
 
     .brand-kicker {
@@ -428,7 +441,7 @@
         <a class="brand-logo" href="#" aria-label="Fecomércio Pernambuco">
           <img src="fecomercio-pe-logo.png" alt="Fecomércio Pernambuco">
         </a>
-        <span class="partner-logo"><img src="ppad-logo.jpg" alt="PPAD UFRPE"></span>
+        <span class="partner-logo ppad"><img src="ppad-logo.jpg" alt="PPAD UFRPE"></span>
         <span class="partner-logo ufrpe"><img src="ufrpe-logo.png" alt="UFRPE"></span>
       </div>
     </div>
