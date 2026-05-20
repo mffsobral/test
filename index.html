@@ -45,23 +45,41 @@
       justify-content: space-between;
       gap: 24px;
       padding: 16px 40px;
-      background: var(--brand-deep);
+      background: #ffffff;
       border-bottom: 0;
     }
 
-    .brand-logo {
-      display: inline-flex;
-      align-items: center;
-      background: white;
-      border-radius: 8px;
-      padding: 6px 9px;
-      box-shadow: 0 10px 26px rgba(0, 33, 76, 0.18);
+    .brand-logos {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .brand-logo img {
+    .brand-logo,
+    .partner-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border-radius: 0;
+      width: 142px;
+      height: 72px;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .brand-logo img,
+    .partner-logo img {
       display: block;
-      width: min(160px, 28vw);
-      height: auto;
+      max-height: 52px;
+      max-width: 120px;
+      object-fit: contain;
+    }
+
+    .partner-logo.ufrpe img {
+      max-width: 52px;
+      max-height: 52px;
     }
 
     .brand-kicker {
@@ -86,7 +104,7 @@
 
     h1 {
       margin: 8px 0 10px;
-      font-size: clamp(30px, 5vw, 56px);
+      font-size: clamp(26px, 4vw, 42px);
       line-height: 1.02;
       max-width: 980px;
       letter-spacing: 0;
@@ -95,7 +113,7 @@
     header p {
       margin: 0;
       max-width: 900px;
-      color: #dcecff;
+      color: var(--muted);
       font-size: 17px;
       line-height: 1.5;
     }
@@ -143,6 +161,13 @@
       margin-bottom: 18px;
     }
 
+    .indicator-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
     .card, .panel {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -153,6 +178,11 @@
     .card {
       padding: 18px;
       min-height: 154px;
+    }
+
+    .mini-card {
+      padding: 13px 14px;
+      min-height: 128px;
     }
 
     .card h2, .panel h2 {
@@ -170,10 +200,19 @@
       margin-top: 14px;
     }
 
+    .mini-card .metric {
+      margin-top: 9px;
+      gap: 6px;
+    }
+
     .metric strong {
       font-size: 42px;
       line-height: 1;
       letter-spacing: 0;
+    }
+
+    .mini-card .metric strong {
+      font-size: 26px;
     }
 
     .metric span { color: var(--muted); }
@@ -192,6 +231,18 @@
     .delta.negative {
       background: #f8eae8;
       color: var(--bad);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 7px;
+      border-radius: 5px;
+      background: var(--gold-soft);
+      color: #835f00;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 8px;
     }
 
     .grid {
@@ -291,6 +342,46 @@
       margin-top: 12px;
     }
 
+    .reports {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .report-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 184px;
+      padding: 15px;
+      color: inherit;
+      text-decoration: none;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .report-card strong {
+      color: var(--brand);
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .report-card span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .report-card p {
+      margin: 0;
+      color: #3e4a59;
+      line-height: 1.4;
+      font-size: 13px;
+    }
+
     .insights {
       display: grid;
       gap: 10px;
@@ -321,7 +412,8 @@
       .brand-bar { align-items: flex-start; flex-direction: column; padding: 14px 20px; }
       .hero-copy { padding: 24px 20px 0; }
       .brand-kicker { text-align: left; }
-      .cards, .grid { grid-template-columns: 1fr; }
+      .brand-logos { justify-content: flex-start; }
+      .cards, .grid, .indicator-grid, .reports { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 1fr; gap: 5px; }
       .table-row { grid-template-columns: 1fr; gap: 4px; }
       .table-row .num { text-align: left; }
@@ -332,15 +424,17 @@
 <body>
   <header>
     <div class="brand-bar">
-      <a class="brand-logo" href="#" aria-label="Fecomércio Pernambuco">
-        <img src="fecomercio-pe-logo.png" alt="Fecomércio Pernambuco">
-      </a>
-      <div class="brand-kicker">CNC · Sesc · Senac · Sindicatos Empresariais</div>
+      <div class="brand-logos" aria-label="Instituições parceiras">
+        <a class="brand-logo" href="#" aria-label="Fecomércio Pernambuco">
+          <img src="fecomercio-pe-logo.png" alt="Fecomércio Pernambuco">
+        </a>
+        <span class="partner-logo"><img src="ppad-logo.jpg" alt="PPAD UFRPE"></span>
+        <span class="partner-logo ufrpe"><img src="ufrpe-logo.png" alt="UFRPE"></span>
+      </div>
     </div>
     <div class="hero-copy">
       <div class="eyebrow">Hub de Dados para PD&I</div>
       <h1>Observatório do Comércio de Pernambuco</h1>
-      <p>Painel executivo automatizado para acompanhar varejo, serviços, atividades setoriais e sinais de demanda territorial para Fecomércio-PE, Senac/PE e Sesc/PE.</p>
     </div>
   </header>
 
@@ -349,6 +443,13 @@
       <div class="status" id="status"></div>
       <div class="source-links" id="sources"></div>
     </section>
+
+    <section class="section-title">
+      <h2>Indicadores do ambiente econômico</h2>
+      <p>Visão rápida de comércio, trabalho, preços, câmbio, juros e abertura de negócios.</p>
+    </section>
+
+    <section class="indicator-grid" id="indicatorCards"></section>
 
     <section class="cards" id="cards"></section>
 
@@ -359,24 +460,18 @@
       </article>
 
       <article class="panel">
-        <h2>Leitura automática</h2>
-        <ul class="insights" id="insights"></ul>
-      </article>
-
-      <article class="panel">
         <h2>Atividades do varejo: variação acumulada em 12 meses</h2>
         <div class="bar-chart" id="bars"></div>
       </article>
 
-      <article class="panel">
-        <h2>Como este painel vira produto</h2>
-        <ul class="insights">
-          <li>Atualização mensal com coleta automática em fontes oficiais e trilha de auditoria.</li>
-          <li>Camadas futuras: CAGED/RAIS, Comex Stat, cursos Senac, programas Sesc, mapas municipais e alertas.</li>
-          <li>Saídas: dashboard web, relatório executivo, nota técnica e apresentação para tomada de decisão.</li>
-        </ul>
-      </article>
     </section>
+
+    <section class="section-title">
+      <h2>Novos negócios e abertura de empresas</h2>
+      <p>Relatórios e painéis para acompanhar abertura, fechamento, tempo de formalização e atividade empresarial.</p>
+    </section>
+
+    <section class="reports" id="businessReports"></section>
 
     <section class="section-title">
       <h2>Emprego formal RAIS</h2>
@@ -443,6 +538,42 @@
       `).join("");
     }
 
+    function renderIndicatorCards() {
+      document.getElementById("indicatorCards").innerHTML = data.indicadores.map((item) => {
+        const value = item.tipo === "texto"
+          ? item.valorTexto
+          : item.tipo === "moeda"
+            ? formatDecimal(item.valor)
+            : item.tipo === "inteiro"
+              ? formatInteger(item.valor)
+              : formatNumber(item.valor);
+        const unit = item.unidade ? `<span>${item.unidade}</span>` : "";
+        const negative = item.inverso ? item.valor > 0 : item.valor < 0;
+        const delta = Number.isFinite(item.variacao)
+          ? `<div class="delta ${item.variacao < 0 ? "negative" : ""}">${formatPct(item.variacao)} no período</div>`
+          : "";
+        return `
+          <article class="card mini-card">
+            <div class="tag">${item.grupo}</div>
+            <h2>${item.titulo}</h2>
+            <div class="metric"><strong>${value}</strong>${unit}</div>
+            ${delta || `<p class="status">${item.periodo || ""}</p>`}
+            <p class="status">${item.detalhe}</p>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderBusinessReports() {
+      document.getElementById("businessReports").innerHTML = data.relatoriosNovosNegocios.map((report) => `
+        <a class="report-card" href="${report.url}" target="_blank" rel="noreferrer">
+          <span>${report.orgao}</span>
+          <strong>${report.titulo}</strong>
+          <p>${report.descricao}</p>
+        </a>
+      `).join("");
+    }
+
     function renderRaisCards() {
       document.getElementById("raisCards").innerHTML = rais.cards.map((card) => `
         <article class="card">
@@ -452,12 +583,6 @@
           <p class="status">${card.periodo}</p>
         </article>
       `).join("");
-    }
-
-    function renderInsights() {
-      document.getElementById("insights").innerHTML = data.insights
-        .map((insight) => `<li>${insight}</li>`)
-        .join("");
     }
 
     function renderRaisInsights() {
@@ -586,14 +711,19 @@
       return Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 0 });
     }
 
+    function formatDecimal(value) {
+      return Number(value).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
     function formatCompact(value) {
       return `${Math.round(value / 1000).toLocaleString("pt-BR")} mil`;
     }
 
     renderStatus();
+    renderIndicatorCards();
+    renderBusinessReports();
     renderCards();
     renderRaisCards();
-    renderInsights();
     renderRaisInsights();
     renderBars();
     renderLineChart();

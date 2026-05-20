@@ -1,5 +1,5 @@
 window.OBSERVATORIO_DATA = {
-  "atualizadoEm": "2026-05-19T14:18:25.203Z",
+  "atualizadoEm": "2026-05-20T16:27:50.164Z",
   "territorio": "Pernambuco",
   "fontes": [
     {
@@ -794,6 +794,146 @@ window.OBSERVATORIO_DATA = {
       "unidade": "índice",
       "periodo": "março 2026",
       "variacao": 8.5
+    }
+  ],
+  "indicadores": [
+    {
+      "grupo": "Comércio",
+      "titulo": "Varejo mês/ano",
+      "valor": 14.2,
+      "unidade": "%",
+      "periodo": "março 2026",
+      "detalhe": "Volume de vendas contra o mesmo mês do ano anterior",
+      "tipo": "percentual"
+    },
+    {
+      "grupo": "Comércio",
+      "titulo": "Varejo no ano",
+      "valor": 12.9,
+      "unidade": "%",
+      "periodo": "março 2026",
+      "detalhe": "Volume acumulado no ano",
+      "tipo": "percentual"
+    },
+    {
+      "grupo": "Comércio",
+      "titulo": "Varejo 12 meses",
+      "valor": 4.9,
+      "unidade": "%",
+      "periodo": "março 2026",
+      "detalhe": "Volume acumulado em 12 meses",
+      "tipo": "percentual"
+    },
+    {
+      "grupo": "Trabalho",
+      "titulo": "Desemprego PE",
+      "valor": 9.2,
+      "unidade": "%",
+      "periodo": "1º trimestre 2026",
+      "detalhe": "Taxa de desocupação PNAD Contínua",
+      "tipo": "percentual",
+      "inverso": true
+    },
+    {
+      "grupo": "Preços",
+      "titulo": "IPCA Recife",
+      "valor": 5.21,
+      "unidade": "%",
+      "periodo": "abril 2026",
+      "detalhe": "Inflação acumulada em 12 meses",
+      "tipo": "percentual",
+      "inverso": true
+    },
+    {
+      "grupo": "Câmbio",
+      "titulo": "Dólar PTAX",
+      "valor": 5.0301,
+      "unidade": "R$",
+      "periodo": "20/05/2026",
+      "detalhe": "Variação aprox. em 31 dias: -2,4%",
+      "tipo": "moeda",
+      "variacao": -2.388806954901812
+    },
+    {
+      "grupo": "Juros",
+      "titulo": "Meta Selic",
+      "valor": 14.5,
+      "unidade": "% a.a.",
+      "periodo": "17/06/2026",
+      "detalhe": "Série SGS/BCB",
+      "tipo": "percentual",
+      "inverso": true
+    },
+    {
+      "grupo": "Emprego",
+      "titulo": "Emprego RAIS",
+      "valor": 1919501,
+      "unidade": "vínculos",
+      "periodo": "2024",
+      "detalhe": "Remuneração média: R$ 3.057",
+      "tipo": "inteiro"
+    },
+    {
+      "grupo": "Negócios",
+      "titulo": "Empresas ativas",
+      "valorTexto": "24,9 mi",
+      "unidade": "",
+      "periodo": "Mapa de Empresas",
+      "detalhe": "Destaque nacional Gov.br",
+      "tipo": "texto"
+    },
+    {
+      "grupo": "Negócios",
+      "titulo": "Tempo de abertura",
+      "valorTexto": "18 h",
+      "unidade": "",
+      "periodo": "Mapa de Empresas",
+      "detalhe": "Tempo médio nacional",
+      "tipo": "texto"
+    },
+    {
+      "grupo": "Negócios",
+      "titulo": "Abertas no mês",
+      "valorTexto": "360 mil",
+      "unidade": "",
+      "periodo": "nov/2025",
+      "detalhe": "Destaque nacional Gov.br",
+      "tipo": "texto"
+    },
+    {
+      "grupo": "Negócios",
+      "titulo": "Abertas < 1 dia",
+      "valorTexto": "76,8%",
+      "unidade": "",
+      "periodo": "Mapa de Empresas",
+      "detalhe": "Participação nacional",
+      "tipo": "texto"
+    }
+  ],
+  "relatoriosNovosNegocios": [
+    {
+      "titulo": "Mapa de Empresas",
+      "orgao": "Gov.br / Empresas & Negócios",
+      "descricao": "Painéis e boletins com abertura, fechamento, empresas ativas e tempo médio de abertura.",
+      "url": "https://www.gov.br/empresas-e-negocios/pt-br/mapa-de-empresas/mapa-de-empresas"
+    },
+    {
+      "titulo": "Boletim do Mapa de Empresas - 2º quadrimestre de 2025",
+      "orgao": "Gov.br / MEMP",
+      "descricao": "Relatório nacional recente sobre ambiente de negócios, aberturas, baixas e simplificação.",
+      "url": "https://www.gov.br/empresas-e-negocios/pt-br/mapa-de-empresas/mapa-de-empresas"
+    },
+    {
+      "titulo": "Painéis do Mapa de Empresas",
+      "orgao": "Redesim",
+      "descricao": "Painéis interativos para filtrar por UF, município, atividade, porte, natureza jurídica e período.",
+      "url": "https://www.gov.br/empresas-e-negocios/pt-br/mapa-de-empresas/mapa-de-empresas"
+    },
+    {
+      "titulo": "Mapa de empresas no turismo/2025",
+      "orgao": "Observatório do Turismo de Pernambuco",
+      "descricao": "Estudo estadual com empresas ligadas ao turismo, útil para comércio, serviços e territórios turísticos.",
+      "url": "https://empetur.pe.gov.br/images/observatorio/mapa-de-empresas/MAPA_DE_EMPRESAS_NO_TURISMO_2025.pdf"
     }
   ],
   "setores": [
