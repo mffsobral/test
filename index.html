@@ -6,6 +6,10 @@
   <title>Observatório do Comércio de Pernambuco</title>
   <script src="dados.js"></script>
   <script src="emprego_rais.js"></script>
+  <script src="analises_rais.js"></script>
+  <script src="abertura_empresas_mapa.js"></script>
+  <script src="abertura_empresas_bairros_recife.js"></script>
+  <script src="empresas_bairros_recife.js"></script>
   <style>
     :root {
       --ink: #172233;
@@ -206,6 +210,28 @@
       letter-spacing: 0;
     }
 
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .source-mini {
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: 800;
+      text-decoration: none;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+      text-align: right;
+    }
+
+    .source-mini:hover {
+      text-decoration: underline;
+    }
+
     .metric {
       display: flex;
       align-items: baseline;
@@ -246,6 +272,19 @@
       color: var(--bad);
     }
 
+    .source-line {
+      display: block;
+      margin-top: 8px;
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .source-line:hover {
+      text-decoration: underline;
+    }
+
     .tag {
       display: inline-flex;
       align-items: center;
@@ -262,7 +301,11 @@
       display: grid;
       grid-template-columns: 1.35fr 0.85fr;
       gap: 16px;
-      align-items: start;
+      align-items: stretch;
+    }
+
+    .grid.equal-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .panel {
@@ -299,6 +342,55 @@
       margin-top: 14px;
     }
 
+    .performance-lists {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .performance-list {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfdff;
+    }
+
+    .performance-list h3 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .performance-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: start;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .performance-item:last-child {
+      border-bottom: 0;
+    }
+
+    .performance-item strong {
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    .performance-item span {
+      font-weight: 800;
+      white-space: nowrap;
+      color: var(--good);
+    }
+
+    .performance-item span.negative {
+      color: var(--bad);
+    }
+
     .bar-row {
       display: grid;
       grid-template-columns: minmax(148px, 1.1fr) 1.8fr 54px;
@@ -330,6 +422,49 @@
       margin-top: 14px;
     }
 
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .analysis-wide {
+      grid-column: span 2;
+    }
+
+    .segment-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .segment-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 15px;
+      min-width: 0;
+    }
+
+    .segment-card h3 {
+      margin: 0 0 8px;
+      color: var(--brand);
+      font-size: 16px;
+    }
+
+    .segment-card .segment-number {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin: 8px 0 6px;
+    }
+
+    .segment-card .segment-number strong {
+      font-size: 28px;
+      line-height: 1;
+    }
+
     .table-row {
       display: grid;
       grid-template-columns: minmax(190px, 1fr) 92px 92px;
@@ -342,12 +477,43 @@
 
     .table-row strong {
       font-size: 14px;
+      line-height: 1.25;
+      min-width: 0;
     }
 
     .table-row .num {
       text-align: right;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
+    }
+
+    .table-header {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 7px;
+    }
+
+    .table-header span {
+      text-align: right;
+    }
+
+    .cnae-list .table-row {
+      grid-template-columns: minmax(0, 1fr) minmax(78px, auto);
+      gap: 10px;
+      align-items: start;
+    }
+
+    .cnae-list .table-row strong {
+      font-size: 13px;
+    }
+
+    .cnae-list .saldo {
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .mini-chart {
@@ -360,6 +526,98 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
       margin-top: 12px;
+    }
+
+    .map-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .map-wrap.business-concentration {
+      grid-template-columns: minmax(300px, 0.95fr) minmax(360px, 1.05fr);
+    }
+
+    .map-box {
+      min-height: 460px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .map-box svg {
+      display: block;
+      width: 100%;
+      height: 460px;
+    }
+
+    .business-concentration .map-box {
+      min-height: 430px;
+    }
+
+    .business-concentration .map-box svg {
+      height: 430px;
+    }
+
+    .business-concentration .table-row {
+      grid-template-columns: minmax(150px, 1fr) minmax(90px, auto) minmax(105px, auto);
+      gap: 8px;
+    }
+
+    .segment-card .table-row {
+      grid-template-columns: minmax(0, 1fr) 72px 72px;
+      gap: 8px;
+      align-items: start;
+      font-size: 12px;
+    }
+
+    .segment-card .table-row .num {
+      text-align: right;
+      font-size: 12px;
+    }
+
+    .segment-card .table-row strong {
+      font-size: 12px;
+    }
+
+    .segment-card .table-header {
+      align-items: end;
+      padding-top: 4px;
+    }
+
+    .segment-card .table-header span {
+      text-align: right;
+      line-height: 1.15;
+    }
+
+    .map-box path {
+      stroke: #ffffff;
+      stroke-width: 0.75;
+      cursor: pointer;
+      transition: opacity 120ms ease, stroke-width 120ms ease;
+    }
+
+    .map-box path:hover {
+      opacity: 0.78;
+      stroke-width: 1.5;
+    }
+
+    .map-legend {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legend-ramp {
+      width: 150px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #eaf3fb, #86b7dc, #00549f, #003d7a);
     }
 
     .report-card {
@@ -426,10 +684,13 @@
       .hero-copy { padding: 24px 20px 0; }
       .brand-kicker { text-align: left; }
       .brand-logos { justify-content: flex-start; }
-      .cards, .grid, .indicator-grid, .reports { grid-template-columns: 1fr; }
+      .cards, .grid, .indicator-grid, .reports, .analysis-grid, .segment-grid, .map-wrap { grid-template-columns: 1fr; }
+      .performance-lists { grid-template-columns: 1fr; }
+      .analysis-wide { grid-column: span 1; }
       .bar-row { grid-template-columns: 1fr; gap: 5px; }
       .table-row { grid-template-columns: 1fr; gap: 4px; }
       .table-row .num { text-align: left; }
+      .panel-head { flex-direction: column; gap: 4px; }
       .chart { height: 300px; }
     }
   </style>
@@ -458,33 +719,91 @@
     </section>
 
     <section class="section-title">
-      <h2>Indicadores do ambiente econômico</h2>
-      <p>Visão rápida de comércio, trabalho, preços, câmbio, juros e abertura de negócios.</p>
+      <h2>Varejo e serviços em Pernambuco</h2>
+      <p>Leitura inicial do desempenho recente do comércio, da receita nominal e dos serviços.</p>
     </section>
-
-    <section class="indicator-grid" id="indicatorCards"></section>
-
+    
     <section class="cards" id="cards"></section>
 
     <section class="grid">
       <article class="panel">
-        <h2>Série recente dos índices IBGE</h2>
+        <div class="panel-head">
+          <h2>Série recente dos índices IBGE</h2>
+          <a class="source-mini" href="https://sidra.ibge.gov.br/" target="_blank" rel="noreferrer">Fonte: IBGE/SIDRA</a>
+        </div>
         <div class="chart" id="lineChart"></div>
       </article>
 
       <article class="panel">
-        <h2>Atividades do varejo: variação acumulada em 12 meses</h2>
+        <div class="panel-head">
+          <h2>Atividades do varejo: variação acumulada em 12 meses</h2>
+          <a class="source-mini" href="https://sidra.ibge.gov.br/tabela/8882" target="_blank" rel="noreferrer">Fonte: IBGE/SIDRA</a>
+        </div>
         <div class="bar-chart" id="bars"></div>
       </article>
 
     </section>
 
     <section class="section-title">
-      <h2>Novos negócios e abertura de empresas</h2>
-      <p>Relatórios e painéis para acompanhar abertura, fechamento, tempo de formalização e atividade empresarial.</p>
+      <h2>Indicadores do ambiente econômico</h2>
+      <p>Contexto para interpretar demanda, preços, câmbio, juros, emprego e inovação.</p>
     </section>
 
-    <section class="reports" id="businessReports"></section>
+    <section class="indicator-grid" id="indicatorCards"></section>
+
+    <section class="section-title">
+      <h2>Concentração empresarial por bairro do Recife</h2>
+      <p>Proxy territorial para polos de geração de trabalho: a base informa empresas por bairro, mas não vínculos empregatícios por estabelecimento.</p>
+    </section>
+
+    <section class="map-wrap business-concentration">
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Empresas ativas por bairro</h2>
+          <a class="source-mini" href="https://dados.recife.pe.gov.br/dataset/empresas-da-cidade-do-recife" target="_blank" rel="noreferrer">Fonte: Prefeitura do Recife</a>
+        </div>
+        <div class="map-box" id="recifeBusinessConcentrationMap"></div>
+        <div class="map-legend"><span>Menos empresas</span><span class="legend-ramp"></span><span>Mais empresas</span></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Bairros com maior concentração</h2>
+          <a class="source-mini" href="https://esigportal2.recife.pe.gov.br/arcgis/rest/services/ATLAS/Serv_Mapas_ATLAS_2015/MapServer/0" target="_blank" rel="noreferrer">Malha: ESIG Recife</a>
+        </div>
+        <div class="table-list" id="recifeBusinessConcentrationRanking"></div>
+      </article>
+    </section>
+
+    <section class="section-title">
+      <h2>Estrutura ocupacional e setores empregadores</h2>
+      <p>Grandes grupos CBO, CNAEs que mais empregam e geração de empregos em tecnologia, saúde e turismo.</p>
+    </section>
+
+    <section class="analysis-grid">
+      <article class="panel analysis-wide">
+        <div class="panel-head">
+          <h2>Grandes Grupos CBO</h2>
+          <a class="source-mini" href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/estatisticas-trabalho/rais" target="_blank" rel="noreferrer">Fonte: RAIS/PDET</a>
+        </div>
+        <div class="bar-chart" id="cboMajorBars"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h2>CNAEs que mais empregam</h2>
+          <a class="source-mini" href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/estatisticas-trabalho/rais" target="_blank" rel="noreferrer">Fonte: RAIS/PDET</a>
+        </div>
+        <div class="table-list" id="topCnaeJobs"></div>
+      </article>
+    </section>
+
+    <section class="section-title">
+      <h2>Geração de empregos por áreas estratégicas</h2>
+      <p>Recorte RAIS para tecnologia, saúde e turismo, com saldo entre 2020 e 2024.</p>
+    </section>
+
+    <section class="segment-grid" id="strategicSegments"></section>
 
     <section class="section-title">
       <h2>Emprego formal RAIS</h2>
@@ -493,24 +812,36 @@
 
     <section class="cards" id="raisCards"></section>
 
-    <section class="grid">
+    <section class="grid equal-grid">
       <article class="panel">
-        <h2>Evolução dos vínculos formais</h2>
+        <div class="panel-head">
+          <h2>Evolução dos vínculos formais</h2>
+          <a class="source-mini" href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/estatisticas-trabalho/rais" target="_blank" rel="noreferrer">Fonte: RAIS/PDET</a>
+        </div>
         <div class="mini-chart" id="raisLineChart"></div>
       </article>
 
       <article class="panel">
-        <h2>Leitura RAIS</h2>
+        <div class="panel-head">
+          <h2>Leitura RAIS</h2>
+          <a class="source-mini" href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/estatisticas-trabalho/rais" target="_blank" rel="noreferrer">Fonte: RAIS/PDET</a>
+        </div>
         <ul class="insights" id="raisInsights"></ul>
       </article>
 
       <article class="panel">
-        <h2>Maiores ocupações em 2024</h2>
+        <div class="panel-head">
+          <h2>Maiores ocupações em 2024</h2>
+          <a class="source-mini" href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/estatisticas-trabalho/rais" target="_blank" rel="noreferrer">Fonte: RAIS/PDET</a>
+        </div>
         <div class="table-list" id="raisTopOccupations"></div>
       </article>
 
       <article class="panel">
-        <h2>Ocupações que mais cresceram desde 2020</h2>
+        <div class="panel-head">
+          <h2>Ocupações que mais cresceram desde 2020</h2>
+          <a class="source-mini" href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/estatisticas-trabalho/rais" target="_blank" rel="noreferrer">Fonte: RAIS/PDET</a>
+        </div>
         <div class="table-list" id="raisGrowth"></div>
       </article>
     </section>
@@ -523,6 +854,21 @@
   <script>
     const data = window.OBSERVATORIO_DATA;
     const rais = window.RAIS_EMPREGOS;
+    const raisAnalises = window.RAIS_ANALISES;
+    const aberturaMapa = window.ABERTURA_EMPRESAS_MAPA;
+    const aberturaBairrosRecife = window.ABERTURA_EMPRESAS_BAIRROS_RECIFE;
+    const empresasBairrosRecife = window.EMPRESAS_BAIRROS_RECIFE;
+    const SOURCES = {
+      sidra: { label: "Fonte: IBGE/SIDRA", url: "https://sidra.ibge.gov.br/" },
+      pmc: { label: "Fonte: IBGE/PMC", url: "https://sidra.ibge.gov.br/tabela/8880" },
+      pms: { label: "Fonte: IBGE/PMS", url: "https://sidra.ibge.gov.br/tabela/5906" },
+      pnad: { label: "Fonte: IBGE/PNAD", url: "https://sidra.ibge.gov.br/tabela/4099" },
+      ipca: { label: "Fonte: IBGE/IPCA", url: "https://sidra.ibge.gov.br/tabela/7060" },
+      bcb: { label: "Fonte: BCB/SGS", url: "https://www.bcb.gov.br/estatisticas/sgs" },
+      rais: { label: "Fonte: RAIS/PDET", url: "https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/estatisticas-trabalho/rais" },
+      mapa: { label: "Fonte: Mapa de Empresas", url: "https://www.gov.br/empresas-e-negocios/pt-br/mapa-de-empresas/mapa-de-empresas" },
+      mcti: { label: "Fonte: MCTI/Lei do Bem", url: "https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/lei-do-bem/lei-do-bem/" },
+    };
 
     function formatNumber(value) {
       return Number(value).toLocaleString("pt-BR", { maximumFractionDigits: 1 });
@@ -547,6 +893,7 @@
           <div class="metric"><strong>${formatNumber(card.valor)}</strong><span>${card.unidade}</span></div>
           <div class="delta ${card.variacao < 0 ? "negative" : ""}">${formatPct(card.variacao)} em 12 meses</div>
           <p class="status">${card.periodo}</p>
+          ${sourceLink(card.titulo === "Serviços" ? SOURCES.pms : SOURCES.pmc)}
         </article>
       `).join("");
     }
@@ -572,18 +919,308 @@
             <div class="metric"><strong>${value}</strong>${unit}</div>
             ${delta || `<p class="status">${item.periodo || ""}</p>`}
             <p class="status">${item.detalhe}</p>
+            ${sourceLink(sourceForIndicator(item))}
           </article>
         `;
       }).join("");
     }
 
-    function renderBusinessReports() {
-      document.getElementById("businessReports").innerHTML = data.relatoriosNovosNegocios.map((report) => `
-        <a class="report-card" href="${report.url}" target="_blank" rel="noreferrer">
-          <span>${report.orgao}</span>
-          <strong>${report.titulo}</strong>
-          <p>${report.descricao}</p>
-        </a>
+    function renderRaisAnalysis() {
+      if (!raisAnalises) return;
+      renderCboMajorBars();
+      renderTopCnaeJobs();
+      renderStrategicSegments();
+    }
+
+    async function renderBusinessMap() {
+      if (!aberturaMapa) return;
+      renderBusinessMapRanking();
+      const box = document.getElementById("businessMap");
+      if (!aberturaMapa.municipios?.length) {
+        box.innerHTML = `<p class="status" style="padding:18px">${aberturaMapa.observacao || "Aguardando processamento dos dados reais da Receita Federal/CNPJ."}</p>`;
+        return;
+      }
+      box.innerHTML = "<p class=\"status\" style=\"padding:18px\">Carregando malha municipal do IBGE...</p>";
+      try {
+        const response = await fetch(aberturaMapa.fonte.malha);
+        const geojson = await response.json();
+        box.innerHTML = geojsonToSvg(geojson);
+      } catch (error) {
+        box.innerHTML = "<p class=\"status\" style=\"padding:18px\">Não foi possível carregar a malha municipal agora.</p>";
+      }
+    }
+
+    async function renderRecifeNeighborhoodMap() {
+      if (!aberturaBairrosRecife) return;
+      renderRecifeNeighborhoodRanking();
+      const box = document.getElementById("recifeNeighborhoodMap");
+      if (!aberturaBairrosRecife.bairros?.length) {
+        box.innerHTML = `<p class="status" style="padding:18px">${aberturaBairrosRecife.observacao || "Aguardando processamento dos dados reais da Receita Federal/CNPJ."}</p>`;
+        return;
+      }
+      box.innerHTML = "<p class=\"status\" style=\"padding:18px\">Carregando bairros do Recife...</p>";
+      try {
+        const response = await fetch(aberturaBairrosRecife.fonte.malha);
+        const geojson = await response.json();
+        box.innerHTML = geojsonToNeighborhoodSvg(geojson);
+      } catch (error) {
+        box.innerHTML = "<p class=\"status\" style=\"padding:18px\">Não foi possível carregar a malha de bairros agora.</p>";
+      }
+    }
+
+    function renderRecifeNeighborhoodRanking() {
+      if (!aberturaBairrosRecife.bairros?.length) {
+        document.getElementById("recifeNeighborhoodRanking").innerHTML = `
+          <p class="status">Sem números publicados nesta prévia. A tabela será preenchida após o processamento real dos arquivos CNPJ da Receita Federal.</p>
+          ${sourceLink({ label: "Fonte: Receita Federal/CNPJ", url: aberturaBairrosRecife.fonte.url })}
+        `;
+        return;
+      }
+      const rows = aberturaBairrosRecife.bairros.slice().sort((a, b) => b.abertas - a.abertas).slice(0, 12);
+      document.getElementById("recifeNeighborhoodRanking").innerHTML = rows.map((row) => `
+        <div class="table-row">
+          <strong>${titleCase(row.bairro)}</strong>
+          <span class="num">${formatInteger(row.abertas)}</span>
+          <span class="num">${aberturaBairrosRecife.periodo}</span>
+        </div>
+      `).join("") + sourceLink({ label: "Fonte: Receita Federal/CNPJ", url: aberturaBairrosRecife.fonte.url });
+    }
+
+    async function renderRecifeBusinessConcentrationMap() {
+      if (!empresasBairrosRecife) return;
+      renderRecifeBusinessConcentrationRanking();
+      const box = document.getElementById("recifeBusinessConcentrationMap");
+      if (!empresasBairrosRecife.bairros?.length) {
+        box.innerHTML = "<p class=\"status\" style=\"padding:18px\">Sem dados de empresas por bairro nesta prévia.</p>";
+        return;
+      }
+      box.innerHTML = "<p class=\"status\" style=\"padding:18px\">Carregando bairros do Recife...</p>";
+      try {
+        const response = await fetch(empresasBairrosRecife.fonte.malha);
+        const geojson = await response.json();
+        box.innerHTML = geojsonToBusinessConcentrationSvg(geojson);
+      } catch (error) {
+        box.innerHTML = "<p class=\"status\" style=\"padding:18px\">Não foi possível carregar a malha de bairros agora.</p>";
+      }
+    }
+
+    function renderRecifeBusinessConcentrationRanking() {
+      if (!empresasBairrosRecife?.bairros?.length) return;
+      const recentes = new Map((empresasBairrosRecife.aberturasRecentes || []).map((row) => [normalizeText(row.bairro), row.aberturas]));
+      const rows = empresasBairrosRecife.bairros.slice(0, 12);
+      document.getElementById("recifeBusinessConcentrationRanking").innerHTML = `
+        <p class="status">${empresasBairrosRecife.metodologia}</p>
+        ${rows.map((row) => `
+          <div class="table-row">
+            <strong>${titleCase(row.bairro)}</strong>
+            <span class="num">${formatInteger(row.empresas)} ativas</span>
+            <span class="num">${formatInteger(recentes.get(normalizeText(row.bairro)) || 0)} desde 2024</span>
+          </div>
+        `).join("")}
+        ${sourceLink({ label: "Fonte: Prefeitura do Recife", url: empresasBairrosRecife.fonte.url })}
+      `;
+    }
+
+    function geojsonToBusinessConcentrationSvg(geojson) {
+      const values = new Map(empresasBairrosRecife.bairros.map((row) => [normalizeText(row.bairro), row]));
+      const polygons = [];
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      for (const feature of geojson.features || []) {
+        const name = normalizeText(feature.properties?.NOME || "");
+        const rings = flattenPolygon(feature.geometry);
+        for (const ring of rings) {
+          for (const [x, y] of ring) {
+            minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+            minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+          }
+          polygons.push({ name, ring });
+        }
+      }
+      const width = 440;
+      const height = 500;
+      const pad = 10;
+      const scale = Math.min((width - pad * 2) / (maxX - minX), (height - pad * 2) / (maxY - minY));
+      const dx = (width - (maxX - minX) * scale) / 2;
+      const dy = (height - (maxY - minY) * scale) / 2;
+      const maxValue = Math.max(...empresasBairrosRecife.bairros.map((row) => row.empresas), 1);
+      const pathFor = (ring) => ring.map(([x, y], index) => {
+        const sx = dx + (x - minX) * scale;
+        const sy = height - (dy + (y - minY) * scale);
+        return `${index === 0 ? "M" : "L"}${sx.toFixed(2)},${sy.toFixed(2)}`;
+      }).join(" ") + " Z";
+      const paths = polygons.map(({ name, ring }) => {
+        const row = values.get(name);
+        const fill = row ? colorRamp(row.empresas / maxValue) : "#edf1f6";
+        const title = row ? `${titleCase(row.bairro)}: ${formatInteger(row.empresas)} empresas ativas` : titleCase(name);
+        return `<path d="${pathFor(ring)}" fill="${fill}"><title>${title}</title></path>`;
+      }).join("");
+      return `<svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mapa de concentração empresarial por bairro do Recife">${paths}</svg>`;
+    }
+
+    function geojsonToNeighborhoodSvg(geojson) {
+      const values = new Map(aberturaBairrosRecife.bairros.map((row) => [normalizeText(row.bairro), row]));
+      const polygons = [];
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      for (const feature of geojson.features || []) {
+        const name = normalizeText(feature.properties?.NOME || "");
+        const rings = flattenPolygon(feature.geometry);
+        for (const ring of rings) {
+          for (const [x, y] of ring) {
+            minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+            minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+          }
+          polygons.push({ name, ring });
+        }
+      }
+      const width = 760;
+      const height = 460;
+      const pad = 18;
+      const scale = Math.min((width - pad * 2) / (maxX - minX), (height - pad * 2) / (maxY - minY));
+      const dx = (width - (maxX - minX) * scale) / 2;
+      const dy = (height - (maxY - minY) * scale) / 2;
+      const maxValue = Math.max(...aberturaBairrosRecife.bairros.map((row) => row.abertas), 1);
+      const pathFor = (ring) => ring.map(([x, y], index) => {
+        const sx = dx + (x - minX) * scale;
+        const sy = height - (dy + (y - minY) * scale);
+        return `${index === 0 ? "M" : "L"}${sx.toFixed(2)},${sy.toFixed(2)}`;
+      }).join(" ") + " Z";
+      const paths = polygons.map(({ name, ring }) => {
+        const row = values.get(name);
+        const fill = row ? colorRamp(row.abertas / maxValue) : "#edf1f6";
+        const title = row ? `${titleCase(row.bairro)}: ${formatInteger(row.abertas)} aberturas` : titleCase(name);
+        return `<path d="${pathFor(ring)}" fill="${fill}"><title>${title}</title></path>`;
+      }).join("");
+      return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Mapa de abertura de empresas por bairro do Recife">${paths}</svg>`;
+    }
+
+    function normalizeText(value) {
+      return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim().toUpperCase();
+    }
+
+    function titleCase(value) {
+      return String(value || "").toLocaleLowerCase("pt-BR").replace(/(^|\s)([a-záàãâéêíóôõúç])/g, (m) => m.toLocaleUpperCase("pt-BR"));
+    }
+
+    function renderBusinessMapRanking() {
+      if (!aberturaMapa.municipios?.length) {
+        document.getElementById("businessMapRanking").innerHTML = `
+          <p class="status">Sem números publicados nesta prévia. A tabela será preenchida após o processamento real dos arquivos CNPJ da Receita Federal.</p>
+          ${sourceLink({ label: "Fonte: Receita Federal/CNPJ", url: aberturaMapa.fonte.url })}
+        `;
+        return;
+      }
+      const rows = aberturaMapa.municipios.slice().sort((a, b) => b.abertas - a.abertas).slice(0, 10);
+      document.getElementById("businessMapRanking").innerHTML = rows.map((row) => `
+        <div class="table-row">
+          <strong>${row.municipio}</strong>
+          <span class="num">${formatInteger(row.abertas)}</span>
+          <span class="num">${aberturaMapa.periodo}</span>
+        </div>
+      `).join("") + sourceLink({ label: "Fonte: Receita Federal/CNPJ", url: aberturaMapa.fonte.url });
+    }
+
+    function geojsonToSvg(geojson) {
+      const values = new Map(aberturaMapa.municipios.map((row) => [String(row.ibge), row]));
+      const polygons = [];
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      for (const feature of geojson.features || []) {
+        const id = String(feature.properties?.codarea || feature.properties?.id || feature.id || "");
+        const rings = flattenPolygon(feature.geometry);
+        for (const ring of rings) {
+          for (const [x, y] of ring) {
+            minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+            minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+          }
+          polygons.push({ id, ring });
+        }
+      }
+      const width = 760;
+      const height = 460;
+      const pad = 18;
+      const scale = Math.min((width - pad * 2) / (maxX - minX), (height - pad * 2) / (maxY - minY));
+      const dx = (width - (maxX - minX) * scale) / 2;
+      const dy = (height - (maxY - minY) * scale) / 2;
+      const maxValue = Math.max(...aberturaMapa.municipios.map((row) => row.abertas), 1);
+      const pathFor = (ring) => ring.map(([x, y], index) => {
+        const sx = dx + (x - minX) * scale;
+        const sy = height - (dy + (y - minY) * scale);
+        return `${index === 0 ? "M" : "L"}${sx.toFixed(2)},${sy.toFixed(2)}`;
+      }).join(" ") + " Z";
+      const paths = polygons.map(({ id, ring }) => {
+        const row = values.get(id);
+        const fill = row ? colorRamp(row.abertas / maxValue) : "#edf1f6";
+        const title = row ? `${row.municipio}: ${formatInteger(row.abertas)} aberturas` : "Sem dado";
+        return `<path d="${pathFor(ring)}" fill="${fill}"><title>${title}</title></path>`;
+      }).join("");
+      return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Mapa municipal de abertura de empresas em Pernambuco">${paths}</svg>`;
+    }
+
+    function flattenPolygon(geometry) {
+      if (!geometry) return [];
+      if (geometry.type === "Polygon") return geometry.coordinates.map((ring) => ring);
+      if (geometry.type === "MultiPolygon") return geometry.coordinates.flatMap((polygon) => polygon.map((ring) => ring));
+      return [];
+    }
+
+    function colorRamp(t) {
+      const clamped = Math.max(0, Math.min(1, t));
+      if (clamped < 0.25) return "#dcecf8";
+      if (clamped < 0.5) return "#86b7dc";
+      if (clamped < 0.75) return "#2275b8";
+      return "#003d7a";
+    }
+
+    function renderCboMajorBars() {
+      const rows = raisAnalises.grandesGruposCbo.slice(0, 10);
+      const max = Math.max(...rows.map((row) => row.vinculos), 1);
+      document.getElementById("cboMajorBars").innerHTML = rows.map((row) => `
+        <div class="bar-row">
+          <div>${row.nome}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${Math.max(4, row.vinculos / max * 100)}%"></div></div>
+          <strong>${formatInteger(row.vinculos)}</strong>
+        </div>
+      `).join("");
+    }
+
+    function renderTopCnaeJobs() {
+      document.getElementById("topCnaeJobs").classList.add("cnae-list");
+      document.getElementById("topCnaeJobs").innerHTML = `
+        <div class="table-row table-header">
+          <strong>CNAE</strong>
+          <span>Vínculos</span>
+        </div>
+        ${raisAnalises.cnaesMaisEmpregam.slice(0, 8).map((row) => `
+          <div class="table-row">
+            <strong>${row.nome}</strong>
+            <span class="num">${formatInteger(row.vinculos)}</span>
+            <span class="saldo">Variação 2020 x 2024: ${row.saldo >= 0 ? "+" : ""}${formatInteger(row.saldo)}</span>
+          </div>
+        `).join("")}
+      `;
+    }
+
+    function renderStrategicSegments() {
+      document.getElementById("strategicSegments").innerHTML = raisAnalises.segmentos.map((segment) => `
+        <article class="segment-card">
+          <h3>${segment.segmento}</h3>
+          <div class="segment-number"><strong>${formatInteger(segment.vinculos)}</strong><span>vínculos</span></div>
+          <div class="delta ${segment.saldo < 0 ? "negative" : ""}">${segment.saldo >= 0 ? "+" : ""}${formatInteger(segment.saldo)} desde 2020</div>
+          ${sourceLink(SOURCES.rais)}
+          <div class="table-list">
+            <div class="table-row table-header">
+              <strong>CNAE</strong>
+              <span>Vínculos</span>
+              <span>Variação</span>
+            </div>
+            ${segment.principaisCnaes.map((row) => `
+              <div class="table-row">
+                <strong>${row.nome}</strong>
+                <span class="num">${formatInteger(row.vinculos)}</span>
+                <span class="num">${row.saldo >= 0 ? "+" : ""}${formatInteger(row.saldo)}</span>
+              </div>
+            `).join("")}
+          </div>
+        </article>
       `).join("");
     }
 
@@ -594,8 +1231,24 @@
           <div class="metric"><strong>${card.unidade.startsWith("R$") ? formatCurrency(card.valor) : formatInteger(card.valor)}</strong><span>${card.unidade}</span></div>
           <div class="delta ${card.variacao < 0 ? "negative" : ""}">${formatPct(card.variacao)} · ${card.comparacao}</div>
           <p class="status">${card.periodo}</p>
+          ${sourceLink(SOURCES.rais)}
         </article>
       `).join("");
+    }
+
+    function sourceLink(source) {
+      return `<a class="source-line" href="${source.url}" target="_blank" rel="noreferrer">${source.label}</a>`;
+    }
+
+    function sourceForIndicator(item) {
+      if (item.grupo === "Comércio") return SOURCES.pmc;
+      if (item.titulo.includes("Desemprego")) return SOURCES.pnad;
+      if (item.titulo.includes("IPCA")) return SOURCES.ipca;
+      if (item.grupo === "Câmbio" || item.grupo === "Juros") return SOURCES.bcb;
+      if (item.grupo === "Emprego") return SOURCES.rais;
+      if (item.grupo === "Negócios") return SOURCES.mapa;
+      if (item.grupo === "Inovação") return SOURCES.mcti;
+      return SOURCES.sidra;
     }
 
     function renderRaisInsights() {
@@ -605,36 +1258,59 @@
     }
 
     function renderRaisTables() {
-      document.getElementById("raisTopOccupations").innerHTML = rais.ocupacoes.slice(0, 8).map((row) => `
-        <div class="table-row">
-          <strong>${row.ocupacao}</strong>
-          <span class="num">${formatInteger(row.vinculos)}</span>
-          <span class="num">${formatCurrency(row.remuneracaoMedia)}</span>
+      const tableSize = 5;
+      document.getElementById("raisTopOccupations").innerHTML = `
+        <div class="table-row table-header">
+          <strong>Ocupação</strong>
+          <span>Vínculos</span>
+          <span>Rem. média</span>
         </div>
-      `).join("");
+        ${rais.ocupacoes.slice(0, tableSize).map((row) => `
+          <div class="table-row">
+            <strong>${row.ocupacao}</strong>
+            <span class="num">${formatInteger(row.vinculos)}</span>
+            <span class="num">R$ ${formatCurrency(row.remuneracaoMedia)}</span>
+          </div>
+        `).join("")}
+      `;
 
-      document.getElementById("raisGrowth").innerHTML = rais.crescimento.slice(0, 8).map((row) => `
-        <div class="table-row">
-          <strong>${row.ocupacao}</strong>
-          <span class="num">+${formatInteger(row.saldo)}</span>
-          <span class="num">${formatInteger(row.vinculosAtual)}</span>
+      document.getElementById("raisGrowth").innerHTML = `
+        <div class="table-row table-header">
+          <strong>Ocupação</strong>
+          <span>Crescimento</span>
+          <span>Vínculos 2024</span>
         </div>
-      `).join("");
+        ${rais.crescimento.slice(0, tableSize).map((row) => `
+          <div class="table-row">
+            <strong>${row.ocupacao}</strong>
+            <span class="num">+${formatInteger(row.saldo)}</span>
+            <span class="num">${formatInteger(row.vinculosAtual)}</span>
+          </div>
+        `).join("")}
+      `;
     }
 
     function renderBars() {
-      const rows = data.setores.slice(0, 9);
-      const max = Math.max(...rows.map((row) => Math.abs(row.variacao12m)), 1);
-      document.getElementById("bars").innerHTML = rows.map((row) => {
-        const width = Math.max(4, Math.abs(row.variacao12m) / max * 100);
-        return `
-          <div class="bar-row">
-            <div>${row.atividade}</div>
-            <div class="bar-track"><div class="bar-fill ${row.variacao12m < 0 ? "negative" : ""}" style="width:${width}%"></div></div>
-            <strong>${formatPct(row.variacao12m)}</strong>
-          </div>
-        `;
-      }).join("");
+      const sorted = data.setores.slice().sort((a, b) => b.variacao12m - a.variacao12m);
+      const best = sorted.slice(0, 5);
+      const worst = sorted.slice(-5).reverse();
+      const list = (title, rows) => `
+        <div class="performance-list">
+          <h3>${title}</h3>
+          ${rows.map((row) => `
+            <div class="performance-item">
+              <strong>${row.atividade}</strong>
+              <span class="${row.variacao12m < 0 ? "negative" : ""}">${formatPct(row.variacao12m)}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+      document.getElementById("bars").innerHTML = `
+        <div class="performance-lists">
+          ${list("Cinco melhores desempenhos", best)}
+          ${list("Cinco piores desempenhos", worst)}
+        </div>
+      `;
     }
 
     function renderLineChart() {
@@ -734,7 +1410,8 @@
 
     renderStatus();
     renderIndicatorCards();
-    renderBusinessReports();
+    renderRecifeBusinessConcentrationMap();
+    renderRaisAnalysis();
     renderCards();
     renderRaisCards();
     renderRaisInsights();

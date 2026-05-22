@@ -1,5 +1,5 @@
 window.OBSERVATORIO_DATA = {
-  "atualizadoEm": "2026-05-20T16:27:50.164Z",
+  "atualizadoEm": "2026-05-21T00:45:04.225Z",
   "territorio": "Pernambuco",
   "fontes": [
     {
@@ -908,6 +908,24 @@ window.OBSERVATORIO_DATA = {
       "periodo": "Mapa de Empresas",
       "detalhe": "Participação nacional",
       "tipo": "texto"
+    },
+    {
+      "grupo": "Inovação",
+      "titulo": "Lei do Bem NE",
+      "valorTexto": "214",
+      "unidade": "",
+      "periodo": "2024",
+      "detalhe": "Empresas participantes no Nordeste",
+      "tipo": "texto"
+    },
+    {
+      "grupo": "Inovação",
+      "titulo": "P&D Nordeste",
+      "valorTexto": "R$ 1,62 bi",
+      "unidade": "",
+      "periodo": "2024",
+      "detalhe": "Investimento incentivado em inovação",
+      "tipo": "texto"
     }
   ],
   "relatoriosNovosNegocios": [
@@ -934,6 +952,12 @@ window.OBSERVATORIO_DATA = {
       "orgao": "Observatório do Turismo de Pernambuco",
       "descricao": "Estudo estadual com empresas ligadas ao turismo, útil para comércio, serviços e territórios turísticos.",
       "url": "https://empetur.pe.gov.br/images/observatorio/mapa-de-empresas/MAPA_DE_EMPRESAS_NO_TURISMO_2025.pdf"
+    },
+    {
+      "titulo": "Lei do Bem em números",
+      "orgao": "MCTI",
+      "descricao": "Indicadores de empresas participantes, projetos e investimento em PD&I incentivado.",
+      "url": "https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/lei-do-bem/lei-do-bem/"
     }
   ],
   "setores": [
